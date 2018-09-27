@@ -46,7 +46,12 @@ int main(){
   ofstream write;
 
   write.open ("inputTemp.cnf");
-  write << "p cnf " << (n*k) << " " << n << endl; //Number of variables, Number of clauses
+  int realVariables = n*k; //
+  int variables = realVariables+n*k*(k-1);
+  int clauses = n+k*k*n*(n-1)/2;
+  int countZ=1;
+  write << "p cnf " << variables << " " << clauses << endl; //Number of variables, Number of clauses
+
   /*Each vertex is present in atleast one subgraph*/
   for(int i=1; i<=n; i++){
     for(int j=0; j<k; j++){
@@ -56,16 +61,41 @@ int main(){
   }
 
   /*Subgraph checking*/
-  for(int i=1; i<=k; i++){
-    for(int j=1; j<=k; j++){
+  for(int i=0; i<k; i++){
+    for(int j=0; j<k; j++){
       //Checking if i is subgraph of j
       if(i!=j){
-
+        int tempCountZ = countZ;
+        for(int x=1; x<=n; x++){
+          write << (realVariables+countZ) << " " << -1*(i*k+x) << " " << -1*(j*k+x) << " 0" << endl; //Z ki definition
+          write << -1*(realVariables+countZ) << " " << (i*k+x) << " 0" << endl;
+          write << -1*(realVariables+countZ) << " " << -1*(j*k+x) << " 0" << endl;
+          countZ++;
+        }
+        for(int x=1; x<=n; x++){
+          write << (realVariables+tempCountZ) << " ";
+          tempCountZ++;
+        }
+        write << 0 << endl;
       }
     }
   }
 
+  /*Adding Clauses for edges*/
+  int edgesZero = n*k;
+  for(int i=1; i<=n; i++){
+    for(int j=1; j<=n; j++){
+      if(edges[i][j]){
+        write << edgesZero+n*i*j << " 0" << endl;
+      }
+      else{
+        write << -1*(edgesZero+n*i*j) << " 0" << endl;
+      }
+    }
+  }
 
+  /*Adding Clauses for full connectivity*/
+  
 
   write.close();
   cout << "Writing done!" << endl;
