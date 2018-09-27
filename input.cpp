@@ -70,3 +70,4 @@ int main(){
   write.close();
   cout << "Writing done!" << endl;
 }
+//I'm added
