@@ -61,6 +61,7 @@ int main(){
   }
 
   /*Subgraph checking*/
+<<<<<<< HEAD
   for(int i=0; i<k; i++){
     for(int j=0; j<k; j++){
       //Checking if i is subgraph of j
@@ -77,8 +78,19 @@ int main(){
           tempCountZ++;
         }
         write << 0 << endl;
+=======
+
+
+
+  /*Edge connectivity checking*/
+  for(int j=0; j<k; j++){
+    for(int i=1; i<n; i++){
+      for(int l=i+1; l<=n; l++){
+        write << -((n*j)+i) << " " << -((n*j)+l) << " " << (n*k)+((i-1)*n)+l << " ";
+>>>>>>> 52fa1169b766241f836ca771d8c73fa65368899f
       }
     }
+    write << 0 << endl;
   }
 
   /*Adding Clauses for edges*/
@@ -94,9 +106,12 @@ int main(){
     }
   }
 
+<<<<<<< HEAD
   /*Adding Clauses for full connectivity*/
   
 
+=======
+>>>>>>> 52fa1169b766241f836ca771d8c73fa65368899f
   write.close();
   cout << "Writing done!" << endl;
 }
