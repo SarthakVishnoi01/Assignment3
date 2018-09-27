@@ -10,14 +10,16 @@
 
 using namespace std;
 
-int main(){
+int main(int argc, char* argv[]){
   // cout << "Is it working" << endl;
 
   int n,m,k; //n->vertices, m->edges, k->number of subgraphs required
   vector<pair<int,int> > edgesIn;
   int tempA, tempB;
   /*Reading the input Data*/
-  ifstream read("test.graph");
+  string file = argv[1];
+  string graph = file + ".graph";
+  ifstream read(graph);
   read >> n >> m >> k;
 
   for(int i=0; i<m; i++){
@@ -39,14 +41,15 @@ int main(){
     int b = edgesIn[i].second;
     edges[a][b] = edges[b][a] = true;
   }
-  cout << "Edges[0][1] " << edges[0][1] << endl;
+  // cout << "Edges[0][1] " << edges[0][1] << endl;
   /*Vertices*/
   bool vertices[n+1][k+1] = { false }; //index,subgraphs
 
   /*Writing the data Finally in the input file to SAT solver*/
   ofstream write;
 
-  write.open ("inputTemp.cnf");
+  string satinput = file + ".satinput";
+  write.open (satinput);
   int realVariables = n*k + n*n; //
   int variables = realVariables+n*k*(k-1);
   int clauses = n + (3*n+1)*k*(k-1) + n*n + k*n*(n-1);
@@ -106,5 +109,5 @@ int main(){
   }
 
   write.close();
-  cout << "Writing done!" << endl;
+  // cout << "Writing done!" << endl;
 }
