@@ -56,18 +56,20 @@ int main(){
   }
 
   /*Subgraph checking*/
-  for(int i=1; i<=k; i++){
-    for(int j=1; j<=k; j++){
-      //Checking if i is subgraph of j
-      if(i!=j){
 
+
+
+  /*Edge connectivity checking*/
+  for(int j=0; j<k; j++){
+    for(int i=1; i<n; i++){
+      for(int l=i+1; l<=n; l++){
+        write << -((n*j)+i) << " " << -((n*j)+l) << " " << (n*k)+((i-1)*n)+l << " ";
       }
     }
+    write << 0 << endl;
   }
-
 
 
   write.close();
   cout << "Writing done!" << endl;
 }
-//I'm added
